@@ -5,6 +5,7 @@ import pickle
 import pandas as pd
 import pytask
 
+from final_project.analysis.model import fit_linear_model
 from final_project.analysis.summary import summary_statistics
 from final_project.config import BLD
 
@@ -19,10 +20,10 @@ def task_summary_statistics(depends_on, produces):
         pickle.dump(stats, f)
 
 
-# for group in GROUPS:
-
-
-#     @pytask.mark.depends_on(
-#         },
-#     @pytask.mark.task(id=group, kwargs=kwargs)
-#     def task_predict_python(depends_on, group, produces):
+@pytask.mark.depends_on(BLD / "python" / "data" / "data_for_analysis.csv")
+@pytask.mark.produces(BLD / "python" / "models" / "estimation.csv")
+def task_fitting_model(depends_on, produces):
+    """Task for fitting a linear model and getting elasticities."""
+    data = pd.read_csv(depends_on)
+    ols = fit_linear_model(data)
+    ols.to_csv(produces, index=False)
