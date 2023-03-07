@@ -2,8 +2,8 @@
 
 import pandas as pd
 import pytest
+from final_project.analysis.summary import predict_prob_by_age
 from pandas.testing import assert_frame_equal
-from final_project.analysis.predict import predict_prob_by_age
 
 
 @pytest.fixture()

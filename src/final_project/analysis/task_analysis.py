@@ -1,10 +1,22 @@
 """Tasks running the core analyses."""
 
+import pickle
 
-# @pytask.mark.depends_on(
-#     },
-# @pytask.mark.produces(BLD / "python" / "models" / "model.pickle")
-# def task_fit_model_python(depends_on, produces):
+import pandas as pd
+import pytask
+
+from final_project.analysis.summary import summary_statistics
+from final_project.config import BLD
+
+
+@pytask.mark.depends_on(BLD / "python" / "data" / "data_clean.csv")
+@pytask.mark.produces(BLD / "python" / "models" / "summary.pickle")
+def task_summary_statistics(depends_on, produces):
+    """Task for calculating summary statistics."""
+    data = pd.read_csv(depends_on)
+    stats = summary_statistics(data)
+    with open(produces, "wb") as f:
+        pickle.dump(stats, f)
 
 
 # for group in GROUPS:
