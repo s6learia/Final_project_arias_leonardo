@@ -1,56 +1,59 @@
 """Functions plotting results."""
 
 import plotly.express as px
-import plotly.graph_objects as go
 
 
-def plot_regression_by_age(data, data_info, predictions, group):
-    """Plot regression results by age.
+def plot_own_wage(data):
+    """Plot regression results for own wage labor elasticity.
 
     Args:
         data (pandas.DataFrame): The data set.
-        data_info (dict): Information on data set stored in data_info.yaml. The
-            following keys can be accessed:
-            - 'outcome': Name of dependent variable column in data
-            - 'outcome_numerical': Name to be given to the numerical version of outcome
-            - 'columns_to_drop': Names of columns that are dropped in data cleaning step
-            - 'categorical_columns': Names of columns that are converted to categorical
-            - 'column_rename_mapping': Old and new names of columns to be renamend,
-                stored in a dictionary with design: {'old_name': 'new_name'}
-            - 'url': URL to data set
-        predictions (pandas.DataFrame): Model predictions for different age values.
-        group (str): Categorical column in data set. We create predictions for each
-            unique value in column data[group]. Cannot be 'age' or 'smoke'.
 
     Returns:
-        plotly.graph_objects.Figure: The figure.
+        plotly.express.Figure: The figure.
 
     """
-    plot_data = predictions.melt(
-        id_vars="age",
-        value_vars=predictions.columns,
-        value_name="prediction",
-        var_name=group,
+    fig_wage = px.scatter(
+        data_frame=data,
+        y="log_wage",
+        x="year",
+        trendline="ols",
+        labels={"log_wage": "Own wage labor elasticity"},
+    )
+    fig_wage.update_traces(mode="lines")
+    fig_wage.data[-1].line.color = "red"
+    fig_wage.data[-1].line.dash = "dash"
+    fig_wage.update_layout(
+        title_text="Change in own wage labor elasticity for married women throughout time",
+        title_x=0.5,
     )
 
-    outcomes = data[data_info["outcome_numerical"]]
+    return fig_wage
 
-    fig = px.line(
-        plot_data,
-        x="age",
-        y="prediction",
-        color=group,
-        labels={"age": "Age", "prediction": "Probability of Smoking"},
+
+def plot_husband_wage(data):
+    """Plot regression results for husband wage labor elasticity.
+
+    Args:
+        data (pandas.DataFrame): The data set.
+
+    Returns:
+        plotly.express.Figure: The figure.
+
+    """
+    fig_hus = px.scatter(
+        data_frame=data,
+        y="husband_wage",
+        x="year",
+        trendline="ols",
+        labels={"husband_wage": "Husband's wage labor elasticity"},
+    )
+    fig_hus.update_traces(mode="lines")
+    fig_hus.data[-1].line.color = "red"
+    fig_hus.data[-1].line.dash = "dash"
+    fig_hus.update_layout(
+        title_text="Change in husband's wage labor elasticity for married women throughout time",
+        title_x=0.5,
     )
 
-    fig.add_traces(
-        go.Scatter(
-            x=data["age"],
-            y=outcomes,
-            mode="markers",
-            marker_color="black",
-            marker_opacity=0.1,
-            name="Data",
-        ),
-    )
-    return fig
+    return fig_hus
