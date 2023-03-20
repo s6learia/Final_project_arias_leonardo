@@ -17,7 +17,7 @@ def task_summary_statistics_table(depends_on, produces):
         summary = pickle.load(summary)
     with open(produces, "w") as f:
         f.write(
-            "\\begin{table}[hp]\n\\centering\n\\caption{Summary statistics} \n\\renewcommand{\\arraystretch}{1.5}\n\\setlength{\\tabcolsep}{0.3cm}\n",
+            "\\centering\n\\caption{Summary statistics} \n\\renewcommand{\\arraystretch}{1.5}\n\\setlength{\\tabcolsep}{0.3cm}\n",
         )
         f.write(
             "\\begin{tabular}{l|ccccccccc}\n\\toprule\n & \\multicolumn{8}{c}{Year} \\\\\n",
@@ -79,7 +79,7 @@ def task_summary_statistics_table(depends_on, produces):
             + "\\\\\n",
         )
         f.write(
-            "\\midrule\n\\midrule\n& \\multicolumn{8}{c}{\\textbf{Wommen}}\\\\\n\\midrule\n& \\multicolumn{8}{c}{All}\\\\\n\\midrule\n",
+            "\\midrule\n\\midrule\n& \\multicolumn{8}{c}{\\textbf{Women}}\\\\\n\\midrule\n& \\multicolumn{8}{c}{All}\\\\\n\\midrule\n",
         )
         f.write(
             "mean & "
@@ -131,7 +131,7 @@ def task_summary_statistics_table(depends_on, produces):
             )
             + "\\\\\n",
         )
-        f.write("\\bottomrule\n\\end{tabular}\n\\end{table}")
+        f.write("\\bottomrule\n\\end{tabular}")
 
 
 @pytask.mark.depends_on(BLD / "python" / "models" / "estimation.csv")

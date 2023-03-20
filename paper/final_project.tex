@@ -1,65 +1,22 @@
-\documentclass[11pt, a4paper, leqno]{article}
-\usepackage{a4wide}
-\usepackage[T1]{fontenc}
+\documentclass{article}
 \usepackage[utf8]{inputenc}
-\usepackage{float, afterpage, rotating, graphicx}
-\usepackage{epstopdf}
-\usepackage{longtable, booktabs, tabularx}
-\usepackage{fancyvrb, moreverb, relsize}
-\usepackage{eurosym, calc}
-% \usepackage{chngcntr}
-\usepackage{amsmath, amssymb, amsfonts, amsthm, bm}
-\usepackage{caption}
-\usepackage{mdwlist}
-\usepackage{xfrac}
-\usepackage{setspace}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{subcaption}
-\usepackage{minibox}
-% \usepackage{pdf14} % Enable for Manuscriptcentral -- can't handle pdf 1.5
-% \usepackage{endfloat} % Enable to move tables / figures to the end. Useful for some
-% submissions.
+\usepackage{fullpage,setspace}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{amsmath,amssymb}
+\usepackage{comment}
+\usepackage{pdfpages}
+\usepackage{xurl}
 
-\usepackage[
-    natbib=true,
-    bibencoding=inputenc,
-    bibstyle=authoryear-ibid,
-    citestyle=authoryear-comp,
-    maxcitenames=3,
-    maxbibnames=10,
-    useprefix=false,
-    sortcites=true,
-    backend=biber
-]{biblatex}
-\AtBeginDocument{\toggletrue{blx@useprefix}}
-\AtBeginBibliography{\togglefalse{blx@useprefix}}
-\setlength{\bibitemsep}{1.5ex}
-\addbibresource{../../paper/refs.bib}
-
-\usepackage[unicode=true]{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=black,
-    anchorcolor=black,
-    citecolor=NavyBlue,
-    filecolor=black,
-    menucolor=black,
-    runcolor=black,
-    urlcolor=NavyBlue
-}
-
-
-\widowpenalty=10000
-\clubpenalty=10000
-
-\setlength{\parskip}{1ex}
-\setlength{\parindent}{0ex}
-\setstretch{1.5}
+\newcommand{\annote}[1]{\parbox{\textwidth}{\renewcommand{\baselinestretch}{0.9}\vspace{11pt} \small Notes: #1}}
 
 
 \begin{document}
 
-\title{final project\thanks{Leonardo Arias Lievano , University of Bonn. Email: \href{mailto:s6learia@uni-bonn.de}{\nolinkurl{s6learia [at] uni-bonn [dot] de}}.}}
+\title{Final project\thanks{Leonardo Arias Lievano , University of Bonn. Email: \href{mailto:s6learia@uni-bonn.de}{\nolinkurl{s6learia@uni-bonn.de}}.}}
 
 \author{Leonardo Arias Lievano }
 
@@ -71,68 +28,30 @@
 
 \maketitle
 
+\begin{table}
+    \input{../python/tables/summary_statistics.tex}
+\end{table}
 
-\begin{abstract}
-    Some abstract here.
-\end{abstract}
-
-\clearpage
-
-
-\section{Introduction} % (fold)
-\label{sec:introduction}
-
-If you are using this template, please cite this item from the references:
-\citet{GaudeckerEconProjectTemplates}.
-
-The data set for the example project is taken from
-\url{https://www.stem.org.uk/resources/elibrary/resource/28452/large-datasets-stats4schools}.
-It contains data on smoking habits in the UK, with 1691 observations and 12 variables.
-We consider only 4 of the 12 features for the prediction of the variable
-\texttt{smoking}: \texttt{marital\_status}, \texttt{highest\_qualification},
-\texttt{gender} and \texttt{age}. We model the dependence using a Logistic model. All
-numerical features are included linearly, while categorical features are expanded into
-dummy variables. Figures below illustrate the model predictions over the lifetime. You
-will find one figure and one estimation summary table for each installed programming
-language.
-
-
-
-\begin{figure}[H]
+\begin{figure}
 
     \centering
-    \includegraphics[width=0.85\textwidth]{../python/figures/smoking_by_marital_status}
+    \includegraphics[width=0.85\textwidth]{../python/figures/Husband_wage_elasticity}
 
-    \caption{\emph{Python:} Model predictions of the smoking probability over the
-        lifetime. Each colored line represents a case where marital status is fixed to one
-        of the values present in the data set.}
-    \label{fig:python-predictions}
+    \caption{Married women labor elasticity regarding the husband's wage
+    throughout the years}
+    \label{fig:husband_wage}
 
 \end{figure}
 
+\begin{figure}
 
-\begin{table}[!h]
-    \input{../python/tables/estimation_results.tex}
-    \caption{\label{tab:python-summary}\emph{Python:} Estimation results of the
-        linear Logistic regression.}
-\end{table}
+    \centering
+    \includegraphics[width=0.85\textwidth]{../python/figures/Own_wage_elasticity}
 
+    \caption{ Married women labor elasticity regarding own wage
+    throughout the years}
+    \label{fig:own_wage}
 
-
-
-% section introduction (end)
-
-
-
-\setstretch{1}
-\printbibliography
-\setstretch{1.5}
-
-
-% \appendix
-
-% The chngctr package is needed for the following lines.
-% \counterwithin{table}{section}
-% \counterwithin{figure}{section}
+\end{figure}
 
 \end{document}
