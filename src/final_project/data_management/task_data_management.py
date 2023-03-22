@@ -12,7 +12,7 @@ from final_project.data_management.clean_data import clean_data
 
 @pytask.mark.produces(SRC / "data" / "cepr_march.zip")
 def task_download(produces):
-    """Task for downloading data from google drive."""
+    """Task for downloading data from dropbox."""
     url = "https://dl.dropboxusercontent.com/s/tcwag2vt2zj1acv/cepr_march%281%29.zip"
     req = requests.get(url)
     with open(produces, "wb") as output_file:
@@ -28,9 +28,9 @@ def task_unzip(depends_on, produces):
 
 
 @pytask.mark.depends_on(BLD / "python" / "data")
-@pytask.mark.produces(BLD / "python" / "data" / "data_clean.csv")
-def task_clean_data(depends_on, produces):
-    """Task for cleaning the data."""
+@pytask.mark.produces(BLD / "python" / "data" / "data_total.csv")
+def task_concat(depends_on, produces):
+    """Task for concatenating all relevant years."""
     data_1980 = pd.read_stata(
         depends_on / "cepr_march_1980.dta",
         convert_categoricals=False,
@@ -76,6 +76,13 @@ def task_clean_data(depends_on, produces):
     ]
 
     total = pd.concat(res)
+    total.to_csv(produces, index=False)
 
+
+@pytask.mark.depends_on(BLD / "python" / "data" / "data_total.csv")
+@pytask.mark.produces(BLD / "python" / "data" / "data_clean.csv")
+def task_clean_data(depends_on, produces):
+    """Task for cleaning the data."""
+    total = pd.read_csv(depends_on)
     data = clean_data(total)
     data.to_csv(produces, index=False)

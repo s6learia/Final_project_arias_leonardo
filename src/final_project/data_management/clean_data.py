@@ -39,6 +39,25 @@ def clean_data(data):
     return data
 
 
+def _count_hh(data):
+    """Counts amount of individuals per households so that later only households where
+    both household's head and wife are in the data set are kept.
+
+    Args:
+        df: data set as pandas data frame with only household's heads and wifes.
+
+    Returns:
+        pandas.DataFrame: The modified data set.
+
+    """
+    data_count = data.groupby(["hhseq", "year"])["hhseq"].count()
+    data_count = pd.DataFrame(data_count)
+    data_count = data_count.rename(columns={"hhseq": "hh_count"})
+    merge_data = pd.merge(data, data_count, how="inner", on=["hhseq", "year"])
+    merge_data = merge_data[(merge_data.hh_count == 2)]
+    return merge_data.sort_values(["year", "hhseq", "female"])
+
+
 def data_analysis(data):
     """Modify the cleaned data set for later use in the analysis part. First, drops all
     members of the household that are not head and spouse. Second, drops all unmarried
@@ -54,15 +73,10 @@ def data_analysis(data):
     """
     data = data[(data.hhrel2 == 1) | (data.hhrel2 == 2)]
     data = data[(data.married == 1)]
-    data_count = data.groupby(["hhseq", "year"])["hhseq"].count()
-    data_count = pd.DataFrame(data_count)
-    data_count = data_count.rename(columns={"hhseq": "hh_count"})
-    merge_data = pd.merge(data, data_count, how="inner", on=["hhseq", "year"])
-    merge_data = merge_data[(merge_data.hh_count == 2)]
-    merge_data = merge_data.sort_values(["year", "hhseq", "female"])
+    merge_data = _count_hh(data)
     merge_data["log_wage"] = np.log(merge_data["rhrwage"])
     merge_data["log_hours"] = np.log(merge_data["anual_worked_hours"])
     merge_data["husband_wage"] = merge_data["log_wage"].shift(1)
-    merge_data = merge_data[(merge_data.female == 0)]
+    merge_data = merge_data[(merge_data.female == 1)]
 
     return merge_data
