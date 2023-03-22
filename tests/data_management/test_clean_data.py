@@ -15,7 +15,7 @@ def data_for_cleaning():
 
 @pytest.fixture()
 def data_for_analysis():
-    return pd.read_csv(BLD / "python" / "data" / "data_for_analysis.csv")
+    return pd.read_csv(BLD / "python" / "data" / "data_clean.csv")
 
 
 def test_clean_data_age(data_for_cleaning):

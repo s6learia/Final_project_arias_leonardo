@@ -32,7 +32,7 @@ def clean_data(data):
         ]
     ]
 
-    data = data[(data.age > 24) | (data.age < 55)]
+    data = data[(data.age > 24) & (data.age < 55)]
 
     data["anual_worked_hours"] = data["wkslyr"] * data["hrslyr"]
 
