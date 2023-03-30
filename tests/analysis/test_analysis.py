@@ -18,6 +18,12 @@ def data_for_model():
 
 
 def test_summary(data_for_summary):
+    """Tests whether the average annual working hour of every subset of the population
+    is positive.
+
+    If the function works correctly it should not create any error.
+
+    """
     summary = summary_statistics(data_for_summary)
     means_men = (
         list(summary["mean of all men"].values())
@@ -34,5 +40,6 @@ def test_summary(data_for_summary):
 
 
 def test_model_rows(data_for_model):
+    """Tests whether the created data frame has the expected number of rows."""
     model_df = fit_linear_model(data_for_model)
     assert model_df.shape[0] == 8

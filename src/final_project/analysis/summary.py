@@ -4,10 +4,10 @@ from statsmodels.stats.weightstats import DescrStatsW
 
 
 def _mean_of_subset(data, female, years, married=None):
-    """Creates the weighted mean of the annual working hour of a specific subset of
-    population.
+    """Create the weighted mean of the annual working hour of subsets of population.
 
     Args:
+        data: pandas data frame that should be used
         married:  1 if married individuals are wanted, 0 if single
         female: 1 if female individuals are wanted, 0 if male
         years: list of all years that are relevant
@@ -43,7 +43,7 @@ def _mean_of_subset(data, female, years, married=None):
 
 
 def _per_change(dic, years):
-    """Calculates percentage change for a given dictionary of summary statistics.
+    """Calculate percentage change for a given dictionary of summary statistics.
 
     Args:
         dic: the dictionary of a specific summary statistic
@@ -70,18 +70,17 @@ def _per_change(dic, years):
 
 
 def summary_statistics(data):
-    """Gets summary statistics on working hours along the different years for different
-    population subsets.
+    """Get summary statistics on working hours for different population groups.
 
     The different population groups are: all men, married men, unmarried men, all women,
-    married women, unmarried women. First, calculates for the different weighted mean for the different
-    years and later, calculated the percentage change
+    married women, unmarried women. First, calculates for the different groups the weighted
+    mean for the different years and later, calculated the percentage change.
 
     Args:
         data (pandas.DataFrame): The data set.
 
     Returns:
-        pandas.DataFrame: Predictions. Has columns 'age' and one column for each
+        nested dictionary: mean and percentage change for different subsets of population.
 
     """
     years = data.year.unique()

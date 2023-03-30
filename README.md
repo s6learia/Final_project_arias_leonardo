@@ -4,8 +4,8 @@
 
 ## Usage
 
-To get started clone this repository and change the directory to the new created folder
-with
+To get started clone this repository and change the directory to the new created folder,
+writing the following lines in the powershell
 
 ```console
 $ git clone https://github.com/s6learia/Final_project_arias_leonardo.git
@@ -25,6 +25,8 @@ Now you can build the project using
 $ pytask
 ```
 
+Note: This project was tested in Windows 11 Home and macOS 13.
+
 ## External Data
 
 After the project is built, a zip file is automatically downloaded from dropbox. This
@@ -36,4 +38,4 @@ http://ceprdata.org/cps-uniform-data-extracts/march-cps-supplement/march-cps-dat
 
 This project was created with [cookiecutter](https://github.com/audreyr/cookiecutter)
 and the
-\[econ-project-templates\](https://github.com/OpenSourceEconomics/econ-project-templates).
+[econ-project-templates](https://github.com/OpenSourceEconomics/econ-project-templates).

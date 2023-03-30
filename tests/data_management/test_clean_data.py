@@ -19,6 +19,7 @@ def data_for_analysis():
 
 
 def test_clean_data_age(data_for_cleaning):
+    """Tests whether the produced data frame respects the age limits."""
     data_clean = clean_data(data_for_cleaning)
     condition = (data_clean["age"] < 25) | (data_clean["age"] > 54)
     out_of_range = data_clean.loc[condition]
@@ -26,11 +27,14 @@ def test_clean_data_age(data_for_cleaning):
 
 
 def test_clean_data_int(data_for_cleaning):
+    """Tests whether the variable 'hhseq' is indeed an integer as expected."""
     data_clean = clean_data(data_for_cleaning)
     assert pd.api.types.is_integer_dtype(data_clean["hhseq"])
 
 
 def test_data_analysis_number(data_for_analysis):
+    """"Tests whether indeed just couples where both individuals are in the data set
+    were kept from the original data."""
     data_for_analysis = data_for_analysis[
         (data_for_analysis.hhrel2 == 1) | (data_for_analysis.hhrel2 == 2)
     ]
@@ -42,12 +46,14 @@ def test_data_analysis_number(data_for_analysis):
 
 
 def test_data_analysis_female(data_for_analysis):
+    """Tests whether just females were kept from the original data."""
     analysis_data = data_analysis(data_for_analysis)
     male = analysis_data.loc[(analysis_data["female"] == 0)]
     assert len(male) == 0
 
 
 def test_data_analysis_married(data_for_analysis):
+    "Tests whether only married individuals were kept from original data."
     analysis_data = data_analysis(data_for_analysis)
     unmarried = analysis_data.loc[(analysis_data["married"] != 1)]
     assert len(unmarried) == 0
